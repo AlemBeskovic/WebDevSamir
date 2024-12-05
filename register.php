@@ -8,6 +8,7 @@
     <link rel="icon" type="image/x-icon" href="./includes/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body style="background-color: #f4f9fc; font-family: Arial, sans-serif;">
@@ -81,14 +82,12 @@
                 <div class="invalid-feedback">Please select a user type.</div>
             </div>
 
-            <!-- Picture Upload -->
+            <!-- File Upload -->
             <div class="mb-3">
-                <label for="picture" class="form-label" style="font-weight: bold;"><i class="fas fa-camera"></i> Picture Upload</label>
-                <input type="file" class="form-control" id="picture" name="picture" accept="image/*" required style="border: 1px solid #cbe5e8; border-radius: 6px;">
-                <small class="text-muted">Allowed formats: jpg, jpeg, png, gif. Max size: 5MB.</small>
-                <div class="invalid-feedback">Please upload a valid image file.</div>
+                <label for="file" class="form-label" style="font-weight: bold;"><i class="fas fa-file-upload"></i> Upload File</label>
+                <input type="file" class="form-control" id="file" name="file" accept=".jpg,.jpeg,.png,.pdf" required style="border: 1px solid #cbe5e8; border-radius: 6px;">
+                <div class="invalid-feedback">Please upload a valid file (jpg, jpeg, png, pdf).</div>
             </div>
-
 
             <button type="submit" class="btn btn-primary w-100" style="background-color: #288286; border: none; font-weight: bold; border-radius: 6px;">
                 <i class="fas fa-user-check"></i> Register
@@ -97,6 +96,7 @@
     </div>
 
     <script>
+        // Bootstrap form validation
         (function() {
             'use strict';
             const forms = document.querySelectorAll('.needs-validation');
