@@ -1,5 +1,6 @@
 <?php
 include '../includes/conn.php'; // Ensure conn.php is included to establish a connection and ensure tables exist
+session_start();
 
 $message = "";
 
@@ -10,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = !empty($_POST['email']) ? trim($_POST['email']) : null;
     $password = !empty($_POST['password']) ? password_hash($_POST['password'], PASSWORD_DEFAULT) : null; // Hash the password
     $full_name = !empty($_POST['full_name']) ? trim($_POST['full_name']) : null;
-    $userType = !empty($_POST['user_type']) ? trim($_POST['user_type']) : 'customer'; // Default to 'customer'
+    $userType = 'customer';
     $address = !empty($_POST['address']) ? trim($_POST['address']) : null;
     $city = !empty($_POST['city']) ? trim($_POST['city']) : null;
     $state = !empty($_POST['state']) ? trim($_POST['state']) : null;
@@ -38,8 +39,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':zip_code', $zip_code);
             $stmt->bindParam(':fileData', $fileData, PDO::PARAM_LOB); // Store as LOB (large object)
             $stmt->execute();
+            $user_id = $conn->lastInsertId();
 
-            $message = "New record created successfully!";
+            // Set session variables for the new user
+            $_SESSION['user_id'] = $user_id;
+            $_SESSION['username'] = $username;
+            $_SESSION['full_name'] = $full_name;
+            $_SESSION['user_type'] = $userType;
+            $_SESSION['user_image'] = $fileData ? 'data:image/jpeg;base64,' . base64_encode($fileData) : '';
+
+            // Redirect to dashboard
+            header('Location: ../dashboard.php');
+            exit();
         } catch (PDOException $e) {
             $message = "Error inserting data: " . $e->getMessage();
         }
@@ -50,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $message = "Invalid request method.";
 }
 
-// Redirect with a message
+// Redirect with a message if registration fails
 header('Location: ../show_message.php?type=Registration&message=' . urlencode($message));
 exit();
 ?>

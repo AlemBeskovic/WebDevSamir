@@ -16,7 +16,6 @@
 
     <body>
         <?php include './includes/conn.php'; ?>
-        <?php include './includes/header.php'; ?>
         <div class="container-fluid content-wrapper d-flex flex-column flex-grow-1">
             <div class="row flex-grow-1">
                 <?php include './includes/nav.php'; ?>

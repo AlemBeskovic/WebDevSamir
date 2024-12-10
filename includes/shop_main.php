@@ -1,4 +1,10 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
+<?php
 if ($_SESSION['user_type'] !== 'customer') {
     echo "Access denied. This page is only for customers.";
     exit();

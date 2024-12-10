@@ -72,15 +72,6 @@
                 <div class="invalid-feedback">Please provide a valid 5-digit zip code.</div>
             </div>
 
-            <!-- User Type -->
-            <div class="mb-3">
-                <label for="user_type" class="form-label" style="font-weight: bold;"><i class="fas fa-user-tag"></i> User Type</label>
-                <select class="form-control" id="user_type" name="user_type" required style="border: 1px solid #cbe5e8; border-radius: 6px;">
-                    <option value="customer">Customer</option>
-                    <option value="merchant">Merchant</option>
-                </select>
-                <div class="invalid-feedback">Please select a user type.</div>
-            </div>
 
             <!-- File Upload -->
             <div class="mb-3">
