@@ -19,8 +19,8 @@ $message = "";
 // Fetch products based on the merchant ID if provided, otherwise fetch all products
 try {
     $query = "SELECT products.*, users.full_name AS merchant_name 
-              FROM products 
-              JOIN users ON products.merchant_id = users.id";
+    FROM products 
+    JOIN users ON products.merchant_id = users.id";
 
     if ($merchant_id) {
         $query .= " WHERE products.merchant_id = :merchant_id";
@@ -48,12 +48,19 @@ try {
             <?php foreach ($products as $product): ?>
                 <div class="col-md-4 mb-4">
                     <div class="card">
+                    <?php if (!empty($product['image_data'])): ?>
+    <img src="data:image/jpeg;base64,<?php echo base64_encode($product['image_data']); ?>" class="card-img-top" alt="Product Image" style="height: 200px; object-fit: cover;">
+<?php else: ?>
+    <img src="path/to/default-image.jpg" class="card-img-top" alt="Default Image" style="height: 200px; object-fit: cover;">
+<?php endif; ?>
+
                         <div class="card-body">
                             <h5 class="card-title"><?php echo htmlspecialchars($product['name']); ?></h5>
                             <p class="card-text"><?php echo htmlspecialchars($product['description']); ?></p>
                             <p class="card-text"><strong>Price:</strong> $<?php echo number_format($product['price'], 2); ?></p>
                             <p class="card-text"><strong>Stock:</strong> <?php echo htmlspecialchars($product['stock']); ?></p>
-                            <form onsubmit="addToCart(event, <?php echo htmlspecialchars(json_encode($product)); ?>)">
+                            <form onsubmit="addToCart(event, <?php echo htmlspecialchars(json_encode(array_diff_key($product, ['image_data' => '']))); ?>)">
+
                                 <div class="mb-2">
                                     <label for="quantity-<?php echo $product['id']; ?>">Quantity:</label>
                                     <input type="number" id="quantity-<?php echo $product['id']; ?>" class="form-control" min="1" max="<?php echo htmlspecialchars($product['stock']); ?>" required>
